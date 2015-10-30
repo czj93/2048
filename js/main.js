@@ -116,12 +116,8 @@ $(document).keydown(function(event){
             setTimeout("getRadomNumber()",210);
             setTimeout("isGameOver()",300);
         } break;
-        default: break;
-            
-    
+        default: break; 
     }
-
-
 });
 
 //  support 2048 function
@@ -195,6 +191,15 @@ function moveLeft(){
                     board[i][j]=0;
                     continue;
                 }
+                   //判断同一行是否有相同的值 并且两个值之间不能有阻挡
+                else if(board[i][k]==board[i][j] && noBlockHorizontal(i,k,j,board)){
+                    move(i,j,i,k);
+                    board[i][k]+=board[i][j];
+                    board[i][j]=0;
+                    score=score+board[i][k];
+                    upDateScore(score);
+                    continue;
+                }
                
                }
            
@@ -221,22 +226,153 @@ function canMoveLeft(board){
     return false;
 
 }
+function moveUp(){
+    if(!canMoveUp(board))
+        return false;    
+    for(var j=0;j<4;j++)
+       for(var i=1;i<4;i++){
+           if(board[i][j]!=0)
+               for(var k=0;k<i;k++){
+                if(board[k][j]==0){
+                    move(i,j,k,j);
+                    board[k][j]=board[i][j];
+                    board[i][j]=0;
+                    continue;
+                }
+                else if(board[k][j]==board[i][j] && noBlockVertical(j,k,i,board)){
+                    move(i,j,k,j);
+                    board[k][j]+=board[i][j];
+                    board[i][j]=0;
+                    score=score+board[k][j];
+                    upDateScore(score);
+                    continue;
+                }   
+               }          
+           }
+    setTimeout("updateBoardView()",200);
+    return true;
+}
 
-
+function canMoveUp(board){
+    for(var j=0;j<4;j++)
+        for(var i=1;i<4;i++)
+        {   
+            if(board[i][j]!=0)
+            {
+                if(board[i-1][j]==0 || board[i-1][j]==board[i][j])
+                    return true;
+            }
+        }
+    return false;
+}
+function moveDown(){
+    if(!canMoveDown(board))
+        return false;
+    
+    for(var j=0;j<4;j++)
+       for(var i=2;i>=0;i--){
+           if(board[i][j]!=0)
+               for(var k=3;k>i;k--){
+                if(board[k][j]==0){
+                    move(i,j,k,j);
+                    board[k][j]=board[i][j];
+                    board[i][j]=0;
+                    continue;
+                }
+                   //判断同一行是否有相同的值 并且两个值之间不能有阻挡
+                else if(board[k][j]==board[i][j] && noBlockVertical(j,i,k,board)){
+                    move(i,j,k,j);
+                    board[k][j]+=board[i][j];
+                    board[i][j]=0;
+                    score=score+board[k][j];
+                    upDateScore(score);
+                    continue;
+                }
+               
+               }
+           
+           }
+    setTimeout("updateBoardView()",200);
+    return true;
+}
+function canMoveDown(){
+    for(var j=0;j<4;j++)
+        for(var i=2;i>=0;i--)
+        {
+            if(board[i][j]!=0)
+            {
+                if(board[i+1][j]==0||board[i][j]==board[i+1][j])
+                    return true;
+            }
+             
+        }
+    return false;
+}
+function moveRight(){
+    if(!canMoveRight(board))
+        return false;
+    
+    for(var i=0;i<4;i++)
+       for(var j=2;j>=0;j--){
+           if(board[i][j]!=0)
+               for(var k=3;k>j;k--){
+                if(board[i][k]==0){
+                    move(i,j,i,k);
+                    board[i][k]=board[i][j];
+                    board[i][j]=0;
+                    continue;
+                }
+                   //判断同一行是否有相同的值 并且两个值之间不能有阻挡
+                else if(board[i][k]==board[i][j] && noBlockHorizontal(i,j,k,board)){
+                    move(i,j,i,k);
+                    board[i][k]+=board[i][j];
+                    board[i][j]=0;
+                    score=score+board[i][k];
+                    upDateScore(score);
+                    continue;
+                }
+               
+               }
+           
+           }
+    setTimeout("updateBoardView()",200);
+    return true;
+}
+function canMoveRight(){
+    for(var i=0;i<4;i++)
+        for(var j=2;j>=0;j--)
+        {
+            if(board[i][j]!=0)
+            {
+                if(board[i][j+1]==0||board[i][j]==board[i][j+1])
+                    return true;
+            }
+             
+        }
+    return false;
+}
 function move(i,j,i,k){
     var moveCell=$("#number-cell-"+i+"-"+j);
     moveCell.animate({
         top:getPosTop(i,k),
         left:getPosLeft(i,k)
     },200);
-
-
 }
-function noBlockHorizontal( row , col1 , col2 , board ){
-    for( var i = col1 + 1 ; i < col2 ; i ++ )
+
+function noBlockHorizontal(row,col1,col2,board){
+    for( var i=col1 + 1 ; i < col2 ; i ++ )
         if( board[row][i] != 0 )
             return false;
     return true;
+    }
+function noBlockVertical(col,row1,row2,board){
+    for(var i=row1+1;i<row2;i++)
+        if(board[i][col]!=0)
+            return false;
+    return true;
+}
+function upDateScore(score){
+    $("#score").text(score);
 }
 
 //show animations function
