@@ -13,6 +13,7 @@ function newGame(){
 }
 function init(){
     //遍历gridcell 设置top left
+    $("#gameOver").hide();
     for(var i=0;i<4;i++)
         for(var j=0;j<4;j++){
            var gridCell=$('#grid-cell-'+i+"-"+j);
@@ -351,11 +352,11 @@ function canMoveRight(){
         }
     return false;
 }
-function move(i,j,i,k){
+function move(i,j,n,m){
     var moveCell=$("#number-cell-"+i+"-"+j);
     moveCell.animate({
-        top:getPosTop(i,k),
-        left:getPosLeft(i,k)
+        top:getPosTop(n,m),
+        left:getPosLeft(n,m)
     },200);
 }
 
@@ -390,4 +391,15 @@ function showNumberWithAnimation( i , j , randNumber ){
         top:getPosTop( i , j ),
         left:getPosLeft( i , j )
     },50);
+}
+
+//游戏结束 isGameOver()
+function isGameOver(){
+    if(!(canMoveLeft(board)||canMoveRight(board)||canMoveDown(board)||canMoveUp(board)))
+        gameOver();
+}
+function gameOver(){
+    $("#gameOver").show();
+    $("#gameOver").animate({top:"180px"},500);
+    
 }

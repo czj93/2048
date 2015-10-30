@@ -5,14 +5,17 @@
         <meta charset="utf-8">
         <link type="text/css" rel=stylesheet href="style/2048.css">
         <script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js" type="text/javascript"></script>
-        <sctipt src="js/support2048.js" type="text/javascript"></sctipt>
-        <script src="js/animations.js" type="text/javascript"></script>
         <script src="js/main.js" type="text/javascript"></script>
     </head>
     <body>
+      
        <header>
+           <div id="gameOver">
+              <h1>Game Over</h1>
+              <div onclick="newGame()" id="again">重新开始</div>
+           </div>
             <h1>2048</h1>
-            <a onclick="" id="newGameButton">New Game</a>
+            <a onclick="newGame()" id="newGameButton">New Game</a>
             <p>score:<span id="score">0</span></p>
             
         </header>
@@ -37,5 +40,6 @@
             <div class="grid-cell" id="grid-cell-3-2"></div>
             <div class="grid-cell" id="grid-cell-3-3"></div>
         </div>
+        
     </body>
 </html>
