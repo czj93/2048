@@ -9,11 +9,7 @@ $(document).ready(function(){
     perparForMobile();
     newGame();
 });
-$(document).keydown(function(event){
-    if(event.keyCode==32)
-        gameOver();
 
-});
 function newGame(){
     //初始化数据
     init();
@@ -156,6 +152,34 @@ $(document).keydown(function(event){
     }
 });
 
+//$(elm).on('swipeleft',function(e,data){});
+//$(elm).on('swiperight',function(e,data){});
+//$(elm).on('swipeup',function(e,data){});
+//$(elm).on('swipedown',function(e,data){});
+$(document).on("swipeleft",function(e,data){
+    if(moveLeft()){
+            setTimeout("getRadomNumber()",210);
+            setTimeout("isGameOver()",300);
+        } 
+});
+$(document).on("swiperight",function(e,data){
+    if(moveRight()){
+            setTimeout("getRadomNumber()",210);
+            setTimeout("isGameOver()",300);
+        } 
+});
+$(document).on("swipedown",function(e,data){
+    if(moveDown()){
+            setTimeout("getRadomNumber()",210);
+            setTimeout("isGameOver()",300);
+        } 
+});
+$(document).on("swipeup",function(e,data){
+    if(moveUp()){
+            setTimeout("getRadomNumber()",210);
+            setTimeout("isGameOver()",300);
+        } 
+});
 //  support 2048 function
 
 /*  得到i第行 j列的div的位置   */
