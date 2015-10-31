@@ -1,8 +1,18 @@
 var board = new Array();
 var score = 0;
 var hasConflicted = new Array();
+var screenWidth = window.screen.availWidth;
+var containerWidth = 0.92*screenWidth;
+var gridCellWidth = 0.18*screenWidth;
+var gridSpaceWidth = 0.04*screenWidth;
 $(document).ready(function(){
+    perparForMobile();
     newGame();
+});
+$(document).keydown(function(event){
+    if(event.keyCode==32)
+        gameOver();
+
 });
 function newGame(){
     //初始化数据
@@ -10,6 +20,28 @@ function newGame(){
     //随机生成一个数
     getRadomNumber();
     getRadomNumber();
+}
+function perparForMobile(){
+    if(screenWidth>500){
+        containerWidth=500;
+        gridCellWidth=100;
+        gridSpaceWidth=20;
+    }
+//    if(screen<500){
+//        $("#gameOver").css("margin-left",0.1*screenWidth);
+//        $("#gameOver").css("margin-right",0.1*screenWidth);
+//    }else{
+//        $("#gameOver").css("margin-left","70px");
+//        $("#gameOver").css("margin-right","70px");
+//    }
+    $(".grid-container").css("width",containerWidth-2*gridSpaceWidth);
+    $(".grid-container").css("height",containerWidth-2*gridSpaceWidth); 
+    $(".grid-container").css("padding",gridSpaceWidth);
+    $(".grid-container").css("border-radius",0.5*gridSpaceWidth);
+    
+    $(".grid-cell").css("border-radius",0.25*gridSpaceWidth);
+    $(".grid-cell").css("width",gridCellWidth);
+    $(".grid-cell").css("height",gridCellWidth);    
 }
 function init(){
     //遍历gridcell 设置top left
@@ -49,12 +81,12 @@ function updateBoardView(){
             {
                 theNumberCell.css("width","0px");
                 theNumberCell.css("height","0px");
-                theNumberCell.css("top",getPosTop(i,j)+50);
-                theNumberCell.css("left",getPosLeft(i,j)+50);
+                theNumberCell.css("top",getPosTop(i,j)+0.5*gridCellWidth);
+                theNumberCell.css("left",getPosLeft(i,j)+0.5*gridCellWidth);
             }
             else{
-                theNumberCell.css("width","100px");
-                theNumberCell.css("height","100px");
+                theNumberCell.css("width",gridCellWidth);
+                theNumberCell.css("height",gridCellWidth);
                 theNumberCell.css("top",getPosTop(i,j));
                 theNumberCell.css("left",getPosLeft(i,j));
                 //getNumberBackgroundColor  传入一个数  返回一个颜色
@@ -64,6 +96,9 @@ function updateBoardView(){
             }
             hasConflicted[i][j] = false;
         }
+    $(".number-cell").css("line-height",gridCellWidth+"px");
+    $(".number-cell").css("font-size",0.6*gridCellWidth+"px");
+    $(".number-cell").css("border-radius",0.25*gridSpaceWidth);
 }
 
 /* 随机在一个空的位置创建2或者4   */
@@ -125,10 +160,10 @@ $(document).keydown(function(event){
 
 /*  得到i第行 j列的div的位置   */
 function getPosLeft(i,j){
-    return 20+j*120;
+    return gridSpaceWidth+j*(gridCellWidth+gridSpaceWidth);
 }
 function getPosTop(i,j){
-    return 20+120*i;
+    return gridSpaceWidth+i*(gridCellWidth+gridSpaceWidth);
 }
 
 
@@ -386,8 +421,8 @@ function showNumberWithAnimation( i , j , randNumber ){
     numberCell.text( randNumber );
 
     numberCell.animate({
-        width:"100px",
-        height:"100px",
+        width:gridCellWidth,
+        height:gridCellWidth,
         top:getPosTop( i , j ),
         left:getPosLeft( i , j )
     },50);
@@ -400,6 +435,7 @@ function isGameOver(){
 }
 function gameOver(){
     $("#gameOver").show();
-    $("#gameOver").animate({top:"180px"},500);
-    
+    $("#gameOver").animate({
+        top:2.2*gridCellWidth   
+    },500);   
 }

@@ -2,13 +2,14 @@
     margin:0;
     padding:0;
 }
+
 header{
     display:block;
     width:500px;
     margin:0px auto;
-    text-align: center;
-    
+    text-align: center;    
 }
+
 header h1{
     font-family: Arial;
     font-weight: bold;
@@ -31,7 +32,7 @@ header h1{
 header p{
     font-family: Arial;
     font-weight: bold;
-    font-size: 30px;
+    font-size: 20px;
     
 }
 .grid-container{
@@ -69,33 +70,33 @@ header p{
     border-radius: 8px;
     font-family: Arial;
     font-size:30px;
-    margin-left: 70px;
-    margin-right: 70px;
-    width:340px;
-    height:300px; 
+    width:35%;
+    margin-left:32.5%;
+    min-height: 250px;
     text-align: center;
-    position: absolute;
     z-index: 9;
-    top:-300px;
     display: none;
+    position: absolute;
     
 }
 #gameOver h1{
-    line-height: 240px;
+    width:100%;
+    height:75%;
+    line-height: 100px;
     color:rgb(169,54,18);
+    font-size: 60px;
+    min-height: 160px;
 }
 #again{
-    width:250px;
+    width:84%;
     font-family: 微软雅黑;
     font-size: 20px;
-    font-weight:700;
     line-height: 20px;
     background-color: rgba(118,95,64,0.7);
     padding: 18px;
     border-radius: 6px;
-    margin:0px auto;
     color:#999;
-
+    margin: 0 auto;
 }
 #again:hover{
     background-color: rgba(120,100,75,0.8);
@@ -103,4 +104,50 @@ header p{
 }
 #again:active{
     color:#ccc;
+}
+
+@media screen and (max-width:450px){
+    body{
+        width:100%;
+    }
+    header{
+        width:100%;
+    }
+    header h1{
+        font-size: 40px;
+    }
+    header p,header a{
+        font-size: 20px;
+    }
+    #newGameButton{
+        font-size: 14px;
+        width: 75px;
+        padding: 6px 6px;
+    }
+    #gameOver{ 
+        width:80%;
+        height:40%; 
+        text-align: center;
+        border-radius: 4px;
+        z-index: 9;
+        top:-300px;
+        display: none;
+        margin-left:10%;
+    }
+    #gameOver h1{
+        font-size:40px;
+        color:rgb(169,54,18);
+    }
+    #again{
+        width:84%;
+        font-family: 微软雅黑;
+        font-size: 20px;
+        line-height: 20px;
+        background-color: rgba(118,95,64,0.7);
+        padding: 12px;
+        border-radius: 3px;
+        margin:0px auto;
+        color:#999;
+
+    }
 }
